@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
-    volumes:
-      - .:/app
+    # volumes:
+    #   - .:/app
     ports:
       - '8038:8080'
       - '1337:1337'
