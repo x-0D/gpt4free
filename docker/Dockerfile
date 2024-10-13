@@ -81,6 +81,6 @@ RUN pip install --break-system-packages --upgrade pip \
 
 # Copy the entire package into the container.
 ADD --chown=$G4F_USER:$G4F_USER g4f $G4F_DIR/g4f
-
+COPY . $G4F_DIR
 # Expose ports
 EXPOSE 8080 1337
