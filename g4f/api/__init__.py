@@ -6,6 +6,7 @@ import uvicorn
 import secrets
 
 from fastapi import FastAPI, Response, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, RedirectResponse, HTMLResponse, JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.security import APIKeyHeader
@@ -23,6 +24,13 @@ from g4f.cookies import read_cookie_files
 
 def create_app():
     app = FastAPI()
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     api = Api(app)
     api.register_routes()
     api.register_authorization()
@@ -168,7 +176,7 @@ class Api:
 
                 async def streaming():
                     try:
-                        async for chunk in response:
+                        async for chunk in (await response):
                             yield f"data: {json.dumps(chunk.to_json())}\n\n"
                     except GeneratorExit:
                         pass
