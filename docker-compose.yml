@@ -1,6 +1,7 @@
 
 services:
   gpt4free:
+    image: hlohaus789/g4f:latest
     shm_size: 2gb
     build:
       context: .
